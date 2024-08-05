@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace DBU
@@ -6,9 +7,16 @@ namespace DBU
     [RequireComponent(typeof(Text))]
     public class IntToTextSetter : SetterBase<int>
     {
+        private Text _target;
+
+        private void Awake()
+        {
+            _target = GetComponent<Text>();
+        }
+
         protected override void OnResponse(int value)
         {
-            throw new System.NotImplementedException();
+            _target.text = value.ToString();
         }
     }
 }

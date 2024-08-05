@@ -30,21 +30,24 @@ namespace DBU
 
             if (customAttribute is InjectorModelAttribute injectorModelAttribute)
             {
+                var genericType = target.GetType().BaseType.GetGenericArguments()[0];
+                
                 foreach (var model in injectorModelAttribute.InjectModel)
                 {
                     var modelName = model.Name;
 
                     var paths = model.GetFields(BindingFlags.Instance | BindingFlags.Public)
-                        .Select(field => $"{modelName}.{field.Name}").ToArray();
+                        .Where(field => field.FieldType == genericType)
+                            .Select(field => $"{modelName}.{field.Name}").ToArray();
                     
                     _fieldPath.AddRange(paths);
                 }
             }
 
             if (_bindNameProperty.stringValue != string.Empty)
-            {
                 _index = _fieldPath.FindIndex(path => path == _bindNameProperty.stringValue);
-            }
+            
+            if (_index == -1 || _index >= _fieldPath.Count) _index = 0;
         }
 
         public override void OnInspectorGUI()

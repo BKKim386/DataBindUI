@@ -9,9 +9,6 @@ namespace DBU
 
 		public InjectorModelAttribute(params Type[] InjectModel)
 		{
-			// if (InjectModel.Any(type => type.IsAssignableFrom(typeof(IBindModel))) == false)
-			// 	throw new Exception();
-			
 			this.InjectModel = InjectModel;
 		}
 	}

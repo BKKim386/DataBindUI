@@ -12,7 +12,7 @@ namespace DBU
 		[HideInInspector] public string BindField;
 		[Inject] private ISubscriber<string, T> _subscriber;
 		private IDisposable _disposable;
-		
+
 		protected abstract void OnResponse(T value);
 
 		private void OnEnable()
